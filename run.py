@@ -137,3 +137,31 @@ def play_hangman():
         if user_input in guessed_letters:
             print("You've already guessed that letter.")
             continue
+
+        guessed_letters.append(user_input)
+
+        if user_input not in word:
+            attempts -= 1
+            current_stage += 1  # Move to the next Hangman stage
+            print(f"Wrong guess! {attempts} attempts left.")
+
+        if current_stage == len(HANGMAN) - 1:
+            print(HANGMAN[current_stage])
+            print("Game over! You've been hanged.")
+            break
+
+    print(f"The word was: {word}")
+
+# Function to display the rules
+
+
+def display_rules():
+    print("\nHangman Rules:")
+    print("1. You have 60 seconds to guess the word.")
+    print("2. You start with 6 attempts.")
+    print("3. Guess one letter at a time.")
+    print("4. If you guess a letter correctly, it will be revealed in the word.")
+    print("5. If you guess a letter incorrectly, you lose an attempt.")
+    print("6. You win the game if you guess the entire word.")
+    print("7. You lose the game if you run out of time or attempts.")
+    input("\nPress Enter to return to the main menu.")
