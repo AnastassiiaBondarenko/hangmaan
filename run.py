@@ -109,3 +109,31 @@ def play_hangman():
         if remaining_time <= 0:
             print("Time's up! You ran out of time.")
             break
+
+        print(HANGMAN[current_stage])  # Display Hangman art
+        print(f"\nWord: {display_word(word, guessed_letters)}")
+        print(f"Guessed letters: {', '.join(guessed_letters)}")
+        print(f"Attempts left: {attempts}")
+        print(f"Time remaining: {remaining_time} seconds")
+
+        if "_" not in display_word(word, guessed_letters):
+            print("Congratulations! You guessed the word.")
+            break
+        if attempts <= 0:
+            print(HANGMAN[len(HANGMAN) - 1])
+            print("Game over! You're out of attempts.")
+            break
+
+        user_input = input("Guess a letter (or 'Q' to quit): ").lower()
+
+        if user_input == 'q':
+            print("You quit the game.")
+            break
+
+        if len(user_input) != 1 or not user_input.isalpha():
+            print("Please enter a valid single letter.")
+            continue
+
+        if user_input in guessed_letters:
+            print("You've already guessed that letter.")
+            continue
