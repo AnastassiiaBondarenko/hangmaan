@@ -165,3 +165,21 @@ def display_rules():
     print("6. You win the game if you guess the entire word.")
     print("7. You lose the game if you run out of time or attempts.")
     input("\nPress Enter to return to the main menu.")
+
+# Main menu with options to view rules, play, or exit
+
+
+menu = TerminalMenu(["View Rules", "Play Hangman", "Exit"])
+
+# Display rules when the game starts
+display_rules()
+
+while True:
+    choice_index = menu.show()
+    if choice_index == 0:
+        display_rules()
+    elif choice_index == 1:
+        play_hangman()
+    elif choice_index == 2:
+        print("Thanks for playing Hangman!")
+        break
