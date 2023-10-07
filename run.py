@@ -75,6 +75,14 @@ HANGMAN = (
 word_list = ["cat", "dog", "gallery", "balloon", "heart", "love", "sunset", "instagram", "black", "flowers",
              "energy", "wedding", "fruits", "developer", "summer", "spain", "vacation"]
 
+
+# Difficulty levels with time limits (in seconds)
+difficulty_levels = {
+    "easy": 60,
+    "medium": 40,
+    "hard": 20
+}
+
 # Function to choose a random word from the word list
 
 
@@ -96,7 +104,8 @@ def display_word(word, guessed_letters):
 # Function to play the Hangman game
 
 
-def play_hangman():
+def play_hangman(difficulty):
+    time_limit = difficulty_levels[difficulty]
     word = choose_word()
     guessed_letters = []
     attempts = 6
@@ -105,7 +114,7 @@ def play_hangman():
 
     while True:
         elapsed_time = int(time.time() - start_time)
-        remaining_time = 60 - elapsed_time
+        remaining_time = time_limit - elapsed_time
         if remaining_time <= 0:
             print("Time's up! You ran out of time.")
             break
@@ -157,7 +166,10 @@ def play_hangman():
 
 def display_rules():
     print("\nHangman Rules:")
-    print("1. You have 60 seconds to guess the word.")
+    print("1. You have a limited time to guess the word based on the difficulty level:")
+    print("   - Easy: 60 seconds")
+    print("   - Medium: 40 seconds")
+    print("   - Hard: 20 seconds")
     print("2. You start with 6 attempts.")
     print("3. Guess one letter at a time.")
     print("4. If you guess a letter correctly, it will be revealed in the word.")
@@ -169,7 +181,8 @@ def display_rules():
 # Main menu with options to view rules, play, or exit
 
 
-menu = TerminalMenu(["View Rules", "Play Hangman", "Exit"])
+menu = TerminalMenu(
+    ["View Rules", "Play Easy", "Play Medium", "Play Hard", "Exit"])
 
 # Display rules when the game starts
 display_rules()
@@ -179,7 +192,11 @@ while True:
     if choice_index == 0:
         display_rules()
     elif choice_index == 1:
-        play_hangman()
+        play_hangman("easy")
     elif choice_index == 2:
+        play_hangman("medium")
+    elif choice_index == 3:
+        play_hangman("hard")
+    elif choice_index == 4:
         print("Thanks for playing Hangman!")
         break
