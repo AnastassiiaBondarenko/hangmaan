@@ -1,6 +1,10 @@
 import random
 import time
 from simple_term_menu import TerminalMenu
+from colorama import init, Fore, Back, Style
+
+# Colorama
+init(autoreset=True)
 
 # Hangman art stages
 HANGMAN = (
@@ -96,9 +100,10 @@ def display_word(word, guessed_letters):
     display = ""
     for letter in word:
         if letter in guessed_letters:
-            display += letter
+            # Green for correctly guessed letters
+            display += Fore.GREEN + letter + Fore.RESET
         else:
-            display += "_"
+            display += Fore.YELLOW + "_" + Fore.RESET  # Yellow for blanks
     return display
 
 # Function to play the Hangman game
@@ -116,35 +121,38 @@ def play_hangman(difficulty):
         elapsed_time = int(time.time() - start_time)
         remaining_time = time_limit - elapsed_time
         if remaining_time <= 0:
-            print("Time's up! You ran out of time.")
+            print(Fore.RED + "Time's up! You ran out of time." + Fore.RESET)
             break
 
         print(HANGMAN[current_stage])  # Display Hangman art
         print(f"\nWord: {display_word(word, guessed_letters)}")
-        print(f"Guessed letters: {', '.join(guessed_letters)}")
+        print(Fore.CYAN +
+              f"Guessed letters: {', '.join(guessed_letters)}" + Fore.RESET)
         print(f"Attempts left: {attempts}")
-        print(f"Time remaining: {remaining_time} seconds")
+        print(Fore.MAGENTA +
+              f"Time remaining: {remaining_time} seconds" + Fore.RESET)
 
         if "_" not in display_word(word, guessed_letters):
-            print("Congratulations! You guessed the word.")
+            print(Fore.GREEN + "Congratulations! You guessed the word." + Fore.RESET)
             break
         if attempts <= 0:
             print(HANGMAN[len(HANGMAN) - 1])
-            print("Game over! You're out of attempts.")
+            print(Fore.RED + "Game over! You're out of attempts." + Fore.RESET)
             break
 
-        user_input = input("Guess a letter (or 'Q' to quit): ").lower()
+        user_input = input(
+            Fore.YELLOW + "Guess a letter (or 'Q' to quit): " + Fore.RESET).lower()
 
         if user_input == 'q':
-            print("You quit the game.")
+            print(Fore.YELLOW + "You quit the game." + Fore.RESET)
             break
 
         if len(user_input) != 1 or not user_input.isalpha():
-            print("Please enter a valid single letter.")
+            print(Fore.RED + "Please enter a valid single letter." + Fore.RESET)
             continue
 
         if user_input in guessed_letters:
-            print("You've already guessed that letter.")
+            print(Fore.RED + "You've already guessed that letter." + Fore.RESET)
             continue
 
         guessed_letters.append(user_input)
@@ -152,38 +160,54 @@ def play_hangman(difficulty):
         if user_input not in word:
             attempts -= 1
             current_stage += 1  # Move to the next Hangman stage
-            print(f"Wrong guess! {attempts} attempts left.")
+            print(
+                Fore.RED + f"Wrong guess! {attempts} attempts left." + Fore.RESET)
 
         if current_stage == len(HANGMAN) - 1:
             print(HANGMAN[current_stage])
-            print("Game over! You've been hanged.")
+            print(Fore.WHITE + Back.RED + Style.BRIGHT +
+                  "Game over! You've been hanged." + Fore.RESET + Back.RESET + Style.RESET_ALL)
             break
 
-    print(f"The word was: {word}")
+    print(Fore.CYAN + f"The word was: {word}" + Fore.RESET)
 
 # Function to display the rules
 
 
 def display_rules():
-    print("\nHangman Rules:")
-    print("1. You have a limited time to guess the word based on the difficulty level:")
-    print("   - Easy: 60 seconds")
-    print("   - Medium: 40 seconds")
-    print("   - Hard: 20 seconds")
-    print("2. You start with 6 attempts.")
-    print("3. Guess one letter at a time.")
-    print("4. If you guess a letter correctly, it will be revealed in the word.")
-    print("5. If you guess a letter incorrectly, you lose an attempt.")
-    print("6. You win the game if you guess the entire word.")
-    print("7. You lose the game if you run out of time or attempts.")
-    input("\nPress Enter to return to the main menu.")
+    title = "Hangman Rules:"
+    rules_text = (
+        "1. You have a limited time to guess the word based on the difficulty level:\n"
+        "   - Easy: 60 seconds\n"
+        "   - Medium: 40 seconds\n"
+        "   - Hard: 20 seconds\n"
+        "2. You start with 6 attempts.\n"
+        "3. Guess one letter at a time.\n"
+        "4. If you guess a letter correctly, it will be revealed in the word.\n"
+        "5. If you guess a letter incorrectly, you lose an attempt.\n"
+        "6. You win the game if you guess the entire word.\n"
+        "7. You lose the game if you run out of time or attempts."
+    )
+
+    colored_title = f"{Fore.MAGENTA}{title}{Fore.RESET}"
+    colored_rules_text = f"{Fore.CYAN}{rules_text}{Fore.RESET}"
+
+    print(f"{colored_title}\n{colored_rules_text}")
+    input(f"{Fore.GREEN}{Back.YELLOW}{Style.BRIGHT}\nPress Enter to return to the main menu.{Style.RESET_ALL}{Back.RESET}{Fore.RESET}")
+
 
 # Main menu with options to view rules, play, or exit
 
 
 menu = TerminalMenu(
-    ["View Rules", "Play Easy", "Play Medium", "Play Hard", "Exit"])
-
+    [
+        f"{Fore.BLUE}View Rules{Fore.RESET}",
+        f"{Fore.GREEN}Play Easy{Fore.RESET}",
+        f"{Fore.YELLOW}Play Medium{Fore.RESET}",
+        f"{Fore.RED}Play Hard{Fore.RESET}",
+        f"{Fore.MAGENTA}Exit{Fore.RESET}"
+    ]
+)
 # Display rules when the game starts
 display_rules()
 
@@ -198,5 +222,6 @@ while True:
     elif choice_index == 3:
         play_hangman("hard")
     elif choice_index == 4:
-        print("Thanks for playing Hangman!")
+        print(Fore.CYAN + Back.MAGENTA + Style.BRIGHT +
+              "Thanks for playing Hangman!" + Style.RESET_ALL + Fore.RESET + Back.RESET)
         break
