@@ -100,10 +100,9 @@ def display_word(word, guessed_letters):
     display = ""
     for letter in word:
         if letter in guessed_letters:
-            # Green for correctly guessed letters
             display += Fore.GREEN + letter + Fore.RESET
         else:
-            display += Fore.YELLOW + "_" + Fore.RESET  # Yellow for blanks
+            display += Fore.YELLOW + "_" + Fore.RESET
     return display
 
 # Function to play the Hangman game
@@ -159,7 +158,7 @@ def play_hangman(difficulty):
 
         if user_input not in word:
             attempts -= 1
-            current_stage += 1  # Move to the next Hangman stage
+            current_stage += 1
             print(
                 Fore.RED + f"Wrong guess! {attempts} attempts left." + Fore.RESET)
 
@@ -193,7 +192,7 @@ def display_rules():
     colored_rules_text = f"{Fore.CYAN}{rules_text}{Fore.RESET}"
 
     print(f"{colored_title}\n{colored_rules_text}")
-    input(f"{Fore.GREEN}{Back.YELLOW}{Style.BRIGHT}\nPress Enter to return to the main menu.{Style.RESET_ALL}{Back.RESET}{Fore.RESET}")
+    input(f"{Fore.BLUE}{Back.YELLOW}{Style.BRIGHT}\nPress Enter to return to the main menu.{Style.RESET_ALL}{Back.RESET}{Fore.RESET}")
 
 
 # Main menu with options to view rules, play, or exit
