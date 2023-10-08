@@ -146,8 +146,13 @@ def play_hangman(difficulty):
             print(Fore.YELLOW + "You quit the game." + Fore.RESET)
             break
 
-        if len(user_input) != 1 or not user_input.isalpha():
-            print(Fore.RED + "Please enter a valid single letter." + Fore.RESET)
+        if len(user_input) != 1:
+            print(Fore.RED + "Please enter only one character." + Fore.RESET)
+            continue
+
+        if not user_input.isalpha():
+            print(
+                Fore.RED + "Please enter a letter, not a number or special character." + Fore.RESET)
             continue
 
         if user_input in guessed_letters:
@@ -192,7 +197,7 @@ def display_rules():
     colored_rules_text = f"{Fore.CYAN}{rules_text}{Fore.RESET}"
 
     print(f"{colored_title}\n{colored_rules_text}")
-    input(f"{Fore.BLUE}{Back.YELLOW}{Style.BRIGHT}\nPress Enter to return to the main menu.{Style.RESET_ALL}{Back.RESET}{Fore.RESET}")
+    input(f"{Fore.GREEN}{Back.LIGHTYELLOW_EX     }{Style.BRIGHT}\nPress Enter to return to the main menu.{Style.RESET_ALL}{Back.RESET}{Fore.RESET}")
 
 
 # Main menu with options to view rules, play, or exit
