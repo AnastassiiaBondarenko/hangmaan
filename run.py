@@ -1,5 +1,6 @@
 import random
 import time
+import gspread
 from simple_term_menu import TerminalMenu
 from colorama import init, Fore, Back, Style
 
