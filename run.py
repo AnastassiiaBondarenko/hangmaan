@@ -1,11 +1,27 @@
 import random
 import time
 import gspread
+from google.oauth2.service_account import Credentials
 from simple_term_menu import TerminalMenu
 from colorama import init, Fore, Back, Style
 
 # Colorama
 init(autoreset=True)
+
+# Google sheets
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+]
+
+
+CREDS = Credentials.from_service_account_file(
+    'hangman-401413-674fb92d9013.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('Hangman')
+
 
 # Hangman art stages
 HANGMAN = (
@@ -115,10 +131,17 @@ def play_hangman(difficulty):
     guessed_letters = []
     attempts = 6
     current_stage = 0
-    start_time = time.time()
+
+    # user name
+    player_name = input(Fore.CYAN + "Enter your name: " + Fore.RESET)
+
+    game_start_time = time.time()
+
+    # user name
+    player_name = input(Fore.CYAN + "Enter your name: " + Fore.RESET)
 
     while True:
-        elapsed_time = int(time.time() - start_time)
+        elapsed_time = int(time.time() - game_start_time)
         remaining_time = time_limit - elapsed_time
         if remaining_time <= 0:
             print(Fore.RED + "Time's up! You ran out of time." + Fore.RESET)
@@ -133,8 +156,12 @@ def play_hangman(difficulty):
               f"Time remaining: {remaining_time} seconds" + Fore.RESET)
 
         if "_" not in display_word(word, guessed_letters):
-            print(Fore.GREEN + "Congratulations! You guessed the word." + Fore.RESET)
+            game_duration = int(time.time() - game_start_time)
+            print(
+                Fore.GREEN + f"Congratulations, {player_name}! You guessed the word in {game_duration} seconds." + Fore.RESET)
+            sheet.append_row([player_name, game_duration])
             break
+
         if attempts <= 0:
             print(HANGMAN[len(HANGMAN) - 1])
             print(Fore.RED + "Game over! You're out of attempts." + Fore.RESET)
@@ -174,7 +201,8 @@ def play_hangman(difficulty):
                   "Game over! You've been hanged." + Fore.RESET + Back.RESET + Style.RESET_ALL)
             break
 
-    print(Fore.CYAN + f"The word was: {word}" + Fore.RESET)
+    print(Fore.CYAN + Back.LIGHTMAGENTA_EX + Style.BRIGHT +
+          f"The word was: {word}" + Fore.RESET + Back.RESET + Style.RESET_ALL)
 
 # Function to display the rules
 
@@ -198,11 +226,10 @@ def display_rules():
     colored_rules_text = f"{Fore.CYAN}{rules_text}{Fore.RESET}"
 
     print(f"{colored_title}\n{colored_rules_text}")
-    input(f"{Fore.GREEN}{Back.LIGHTYELLOW_EX     }{Style.BRIGHT}\nPress Enter to return to the main menu.{Style.RESET_ALL}{Back.RESET}{Fore.RESET}")
+    input(f"{Fore.GREEN}{Back.LIGHTYELLOW_EX}{Style.BRIGHT}\nPress Enter to return to the main menu.{Style.RESET_ALL}{Back.RESET}{Fore.RESET}")
 
 
 # Main menu with options to view rules, play, or exit
-
 
 menu = TerminalMenu(
     [
