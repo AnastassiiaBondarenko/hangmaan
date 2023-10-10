@@ -137,9 +137,6 @@ def play_hangman(difficulty):
 
     game_start_time = time.time()
 
-    # user name
-    player_name = input(Fore.CYAN + "Enter your name: " + Fore.RESET)
-
     while True:
         elapsed_time = int(time.time() - game_start_time)
         remaining_time = time_limit - elapsed_time
@@ -159,7 +156,7 @@ def play_hangman(difficulty):
             game_duration = int(time.time() - game_start_time)
             print(
                 Fore.GREEN + f"Congratulations, {player_name}! You guessed the word in {game_duration} seconds." + Fore.RESET)
-            sheet.append_row([player_name, game_duration])
+            SHEET.append_row([player_name, game_duration])
             break
 
         if attempts <= 0:
