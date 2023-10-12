@@ -22,7 +22,6 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('Hangman')
 
-
 # Hangman art stages
 HANGMAN = (
     """
@@ -117,9 +116,9 @@ def display_word(word, guessed_letters):
     display = ""
     for letter in word:
         if letter in guessed_letters:
-            display += Fore.GREEN + letter + Fore.RESET
+            display += Fore.GREEN + letter
         else:
-            display += Fore.YELLOW + "_" + Fore.RESET
+            display += Fore.YELLOW + "_"
     return display
 
 # Function to play the Hangman game
@@ -133,7 +132,7 @@ def play_hangman(difficulty):
     current_stage = 0
 
     # user name
-    player_name = input(Fore.CYAN + "Enter your name: " + Fore.RESET)
+    player_name = input(Fore.CYAN + "Enter your name: ")
 
     game_start_time = time.time()
 
@@ -141,47 +140,50 @@ def play_hangman(difficulty):
         elapsed_time = int(time.time() - game_start_time)
         remaining_time = time_limit - elapsed_time
         if remaining_time <= 0:
-            print(Fore.RED + "Time's up! You ran out of time." + Fore.RESET)
+            print(Fore.RED + "Time's up! You ran out of time.")
             break
 
         print(HANGMAN[current_stage])  # Display Hangman art
         print(f"\nWord: {display_word(word, guessed_letters)}")
         print(Fore.CYAN +
-              f"Guessed letters: {', '.join(guessed_letters)}" + Fore.RESET)
+              f"Guessed letters: {', '.join(guessed_letters)}")
         print(f"Attempts left: {attempts}")
         print(Fore.MAGENTA +
-              f"Time remaining: {remaining_time} seconds" + Fore.RESET)
+              f"Time remaining: {remaining_time} seconds")
 
         if "_" not in display_word(word, guessed_letters):
             game_duration = int(time.time() - game_start_time)
             print(
-                Fore.GREEN + f"Congratulations, {player_name}! You guessed the word in {game_duration} seconds." + Fore.RESET)
-            SHEET.append_row([player_name, game_duration])
+                Fore.GREEN + f"Congratulations, {player_name}! You guessed the word in {game_duration} seconds.")
+            worksheet_title = "Hangman"
+            worksheet = SHEET.worksheet(worksheet_title)
+            values = [[player_name, game_duration]]
+            worksheet.append_table(values)
             break
 
         if attempts <= 0:
             print(HANGMAN[len(HANGMAN) - 1])
-            print(Fore.RED + "Game over! You're out of attempts." + Fore.RESET)
+            print(Fore.RED + "Game over! You're out of attempts.")
             break
 
         user_input = input(
-            Fore.YELLOW + "Guess a letter (or 'Q' to quit): " + Fore.RESET).lower()
+            Fore.YELLOW + "Guess a letter (or 'Q' to quit): ").lower()
 
         if user_input == 'q':
-            print(Fore.YELLOW + "You quit the game." + Fore.RESET)
+            print(Fore.YELLOW + "You quit the game.")
             break
 
         if len(user_input) != 1:
-            print(Fore.RED + "Please enter only one character." + Fore.RESET)
+            print(Fore.RED + "Please enter only one character.")
             continue
 
         if not user_input.isalpha():
             print(
-                Fore.RED + "Please enter a letter, not a number or special character." + Fore.RESET)
+                Fore.RED + "Please enter a letter, not a number or special character.")
             continue
 
         if user_input in guessed_letters:
-            print(Fore.RED + "You've already guessed that letter." + Fore.RESET)
+            print(Fore.RED + "You've already guessed that letter.")
             continue
 
         guessed_letters.append(user_input)
@@ -190,17 +192,16 @@ def play_hangman(difficulty):
             attempts -= 1
             current_stage += 1
             print(
-                Fore.RED + f"Wrong guess! {attempts} attempts left." + Fore.RESET)
+                Fore.RED + f"Wrong guess! {attempts} attempts left.")
 
         if current_stage == len(HANGMAN) - 1:
             print(HANGMAN[current_stage])
             print(Fore.WHITE + Back.RED + Style.BRIGHT +
-                  "Game over! You've been hanged." + Fore.RESET + Back.RESET + Style.RESET_ALL)
+                  "Game over! You've been hanged.")
             break
 
     print(Fore.CYAN + Back.LIGHTMAGENTA_EX + Style.BRIGHT +
-          f"The word was: {word}" + Fore.RESET + Back.RESET + Style.RESET_ALL)
-
+          f"The word was: {word}")
 # Function to display the rules
 
 
@@ -219,22 +220,22 @@ def display_rules():
         "7. You lose the game if you run out of time or attempts."
     )
 
-    colored_title = f"{Fore.MAGENTA}{title}{Fore.RESET}"
-    colored_rules_text = f"{Fore.CYAN}{rules_text}{Fore.RESET}"
+    colored_title = f"{Fore.MAGENTA}{title}"
+    colored_rules_text = f"{Fore.CYAN}{rules_text}"
 
     print(f"{colored_title}\n{colored_rules_text}")
-    input(f"{Fore.GREEN}{Back.LIGHTYELLOW_EX}{Style.BRIGHT}\nPress Enter to return to the main menu.{Style.RESET_ALL}{Back.RESET}{Fore.RESET}")
+    input(f"{Fore.GREEN}{Back.LIGHTYELLOW_EX}{Style.BRIGHT}\nPress Enter to return to the main menu.")
 
 
 # Main menu with options to view rules, play, or exit
 
 menu = TerminalMenu(
     [
-        f"{Fore.BLUE}View Rules{Fore.RESET}",
-        f"{Fore.GREEN}Play Easy{Fore.RESET}",
-        f"{Fore.YELLOW}Play Medium{Fore.RESET}",
-        f"{Fore.RED}Play Hard{Fore.RESET}",
-        f"{Fore.MAGENTA}Exit{Fore.RESET}"
+        f"View Rules",
+        f"Play Easy",
+        f"Play Medium",
+        f"Play Hard",
+        f"Exit"
     ]
 )
 # Display rules when the game starts
@@ -252,5 +253,5 @@ while True:
         play_hangman("hard")
     elif choice_index == 4:
         print(Fore.CYAN + Back.MAGENTA + Style.BRIGHT +
-              "Thanks for playing Hangman!" + Style.RESET_ALL + Fore.RESET + Back.RESET)
+              "Thanks for playing Hangman!")
         break
