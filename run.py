@@ -1,27 +1,13 @@
 import random
 import time
-import gspread
 import threading
 import os
-from google.oauth2.service_account import Credentials
 from simple_term_menu import TerminalMenu
 from colorama import init, Fore, Back, Style
 
 # Colorama
 init(autoreset=True)
 
-# Google sheets
-SCOPE = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
-]
-
-CREDS = Credentials.from_service_account_file(
-    'hangman-401413-674fb92d9013.json')
-SCOPED_CREDS = CREDS.with_scopes(SCOPE)
-GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('Hangman')
 
 # Hangman art stages
 HANGMAN = (
@@ -96,7 +82,7 @@ HANGMAN = (
 word_list = ["cat", "dog", "gallery", "balloon", "heart", "love", "sunset", "instagram", "black", "flowers",
              "energy", "wedding", "fruits", "developer", "summer", "spain", "vacation"]
 
-# Difficulty levels with time limits (in seconds)
+# Difficulty levels with  limits (in seconds)
 difficulty_levels = {
     "easy": 60,
     "medium": 40,
@@ -158,7 +144,7 @@ def play_hangman(difficulty):
             elapsed_time = int(time.time() - game_start_time)
             remaining_time = time_limit - elapsed_time
             print(Fore.MAGENTA +
-                  f"Time remaining: {remaining_time} seconds", end="\r")
+                  f"Time remaining: {remaining_time} seconds", end="\n")
             if remaining_time <= 0:
                 # Move to a new line when the game ends
                 print(Fore.RED + "Time's up! You ran out of time.", end="\n")
@@ -170,7 +156,6 @@ def play_hangman(difficulty):
     timer.start()
 
     while True:
-        clear_screen()
         print(HANGMAN[current_stage])  # Display Hangman art
         print(f"\nWord: {display_word(word, guessed_letters)}")
         print(Fore.CYAN + f"Guessed letters: {', '.join(guessed_letters)}")
@@ -180,10 +165,6 @@ def play_hangman(difficulty):
             game_duration = int(time.time() - game_start_time)
             print(
                 Fore.GREEN + f"Congratulations, {player_name}! You guessed the word in {game_duration} seconds.")
-            worksheet_title = "Hangman"
-            worksheet = SHEET.worksheet(worksheet_title)
-            values = [[player_name, game_duration]]
-            worksheet.append_table(values)
             break
 
         if attempts <= 0:
