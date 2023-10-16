@@ -143,8 +143,14 @@ def play_hangman(difficulty):
         while True:
             elapsed_time = int(time.time() - game_start_time)
             remaining_time = time_limit - elapsed_time
-            print(Fore.MAGENTA +
-                  f"Time remaining: {remaining_time} seconds", end="\n")
+            if remaining_time == 60:
+                continue
+            else:
+
+                print("\033[A                             \033[A")
+                print(Fore.MAGENTA +
+                      f"Time remaining: {remaining_time} seconds", end="\n")
+
             if remaining_time <= 0:
                 # Move to a new line when the game ends
                 print(Fore.RED + "Time's up! You ran out of time.", end="\n")
@@ -159,7 +165,9 @@ def play_hangman(difficulty):
         print(HANGMAN[current_stage])  # Display Hangman art
         print(f"\nWord: {display_word(word, guessed_letters)}")
         print(Fore.CYAN + f"Guessed letters: {', '.join(guessed_letters)}")
+        print()
         print(f"Attempts left: {attempts}")
+        print()
 
         if "_" not in display_word(word, guessed_letters):
             game_duration = int(time.time() - game_start_time)
