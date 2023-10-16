@@ -1,6 +1,8 @@
 import random
 import time
 import gspread
+import threading
+import os
 from google.oauth2.service_account import Credentials
 from simple_term_menu import TerminalMenu
 from colorama import init, Fore, Back, Style
@@ -14,7 +16,6 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
 ]
-
 
 CREDS = Credentials.from_service_account_file(
     'hangman-401413-674fb92d9013.json')
@@ -95,7 +96,6 @@ HANGMAN = (
 word_list = ["cat", "dog", "gallery", "balloon", "heart", "love", "sunset", "instagram", "black", "flowers",
              "energy", "wedding", "fruits", "developer", "summer", "spain", "vacation"]
 
-
 # Difficulty levels with time limits (in seconds)
 difficulty_levels = {
     "easy": 60,
@@ -121,35 +121,60 @@ def display_word(word, guessed_letters):
             display += Fore.YELLOW + "_"
     return display
 
+# Function to clear the terminal screen
+
+
+def clear_screen():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
+
 # Function to play the Hangman game
 
 
 def play_hangman(difficulty):
+
     time_limit = difficulty_levels[difficulty]
     word = choose_word()
     guessed_letters = []
     attempts = 6
     current_stage = 0
-
-    # user name
-    player_name = input(Fore.CYAN + "Enter your name: ")
+    # User name input
+    while True:
+        player_name = input(Fore.CYAN + "Enter your name: ").strip().title()
+        if (player_name.isalpha() and len(player_name) > 0):
+            break
+        else:
+            print(
+                Fore.RED + "Please enter a valid name with no numbers or special symbols.")
 
     game_start_time = time.time()
 
-    while True:
-        elapsed_time = int(time.time() - game_start_time)
-        remaining_time = time_limit - elapsed_time
-        if remaining_time <= 0:
-            print(Fore.RED + "Time's up! You ran out of time.")
-            break
+    # Timer thread to update the timer every second
+    def timer_thread():
+        while True:
+            elapsed_time = int(time.time() - game_start_time)
+            remaining_time = time_limit - elapsed_time
+            print(Fore.MAGENTA +
+                  f"Time remaining: {remaining_time} seconds", end="\r")
+            if remaining_time <= 0:
+                # Move to a new line when the game ends
+                print(Fore.RED + "Time's up! You ran out of time.", end="\n")
+                break
+            time.sleep(1)
 
+    timer = threading.Thread(target=timer_thread)
+    timer.daemon = True
+    timer.start()
+
+    while True:
+        clear_screen()
         print(HANGMAN[current_stage])  # Display Hangman art
         print(f"\nWord: {display_word(word, guessed_letters)}")
-        print(Fore.CYAN +
-              f"Guessed letters: {', '.join(guessed_letters)}")
+        print(Fore.CYAN + f"Guessed letters: {', '.join(guessed_letters)}")
         print(f"Attempts left: {attempts}")
-        print(Fore.MAGENTA +
-              f"Time remaining: {remaining_time} seconds")
 
         if "_" not in display_word(word, guessed_letters):
             game_duration = int(time.time() - game_start_time)
@@ -178,8 +203,7 @@ def play_hangman(difficulty):
             continue
 
         if not user_input.isalpha():
-            print(
-                Fore.RED + "Please enter a letter, not a number or special character.")
+            print(Fore.RED + "Please enter a letter, not a number or special character.")
             continue
 
         if user_input in guessed_letters:
@@ -191,8 +215,7 @@ def play_hangman(difficulty):
         if user_input not in word:
             attempts -= 1
             current_stage += 1
-            print(
-                Fore.RED + f"Wrong guess! {attempts} attempts left.")
+            print(Fore.RED + f"Wrong guess! {attempts} attempts left.")
 
         if current_stage == len(HANGMAN) - 1:
             print(HANGMAN[current_stage])
@@ -200,8 +223,9 @@ def play_hangman(difficulty):
                   "Game over! You've been hanged.")
             break
 
-    print(Fore.CYAN + Back.LIGHTMAGENTA_EX + Style.BRIGHT +
-          f"The word was: {word}")
+    print(Fore.CYAN + Back.LIGHTMAGENTA_EX +
+          Style.BRIGHT + f"The word was: {word}")
+
 # Function to display the rules
 
 
@@ -255,3 +279,4 @@ while True:
         print(Fore.CYAN + Back.MAGENTA + Style.BRIGHT +
               "Thanks for playing Hangman!")
         break
+clear_screen()
