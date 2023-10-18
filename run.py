@@ -184,7 +184,7 @@ menu = TerminalMenu(
         f"Play Hard",
         f"Exit"
     ],
-    menu_cursor=None,  # Remove the cursor
+    menu_cursor=None,
     **menu_styles
 )
 
