@@ -6,4 +6,4 @@ __pycache__/
 *.py[cod]
 node_modules/
 .github/
-hangman-401413-674fb92d9013.json
+creds.json

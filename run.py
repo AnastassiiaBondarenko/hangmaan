@@ -1,6 +1,21 @@
 import random
+import gspread
+from google.oauth2.service_account import Credentials
 from simple_term_menu import TerminalMenu
 from colorama import init, Fore, Back, Style
+
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+]
+
+CREDS = Credentials.from_service_account_file('creds.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('Hang_maan')
+
+PLAYER_DATA_SHEET = SHEET.worksheet('Hangman')
 
 # Colorama
 init(autoreset=True)
@@ -112,6 +127,21 @@ def update_score(points):
     global score
     score += points
 
+# Function to update the Google Sheet
+
+
+def update_google_sheet(player_name, score):
+    try:
+        values_to_insert = [[player_name, str(score)]]
+        PLAYER_DATA_SHEET.insert_rows(values_to_insert, 2)
+    except Exception as e:
+        print(f"Error updating Google Sheet: {str(e)}")
+
+
+def reset_player_data():
+    global player_name, score
+    player_name = ""
+    score = 0
 # Function to play the Hangman game
 
 
@@ -240,4 +270,6 @@ while True:
     elif choice_index == 4:
         print(Fore.CYAN + Back.MAGENTA + Style.BRIGHT +
               "Thanks for playing Hangman!" + Style.RESET_ALL + Fore.RESET + Back.RESET)
+        update_google_sheet(player_name, score)
+        reset_player_data()
         break
