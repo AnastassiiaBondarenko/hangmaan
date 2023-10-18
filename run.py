@@ -1,5 +1,4 @@
 import random
-import time
 from simple_term_menu import TerminalMenu
 from colorama import init, Fore, Back, Style
 
@@ -75,23 +74,24 @@ HANGMAN = (
     """
 )
 
-# List of words for the Hangman game
-word_list = ["cat", "dog", "gallery", "balloon", "heart", "love", "sunset", "instagram", "black", "flowers",
-             "energy", "wedding", "fruits", "developer", "summer", "spain", "vacation"]
-
-
-# Difficulty levels with time limits (in seconds)
-difficulty_levels = {
-    "easy": 60,
-    "medium": 40,
-    "hard": 20
+# Words for Hangman by difficulty level
+word_lists = {
+    "easy": ["cat", "dog", "sun", "hat", "red", "blue", "book", "tree", "lamp", "fish", "rose", "moon", "frog", "bear", "bird", "ship", "ball", "milk", "cake", "star", "corn", "leaf", "duck", "ring", "toys", "door", "gate", "bell", "desk", "film", "hair", "jump", "lake", "mask", "nest", "pill", "quilt", "rain", "sock", "tree", "vase", "wall", "zoo", "note", "ocean", "pencil", "queen", "radio", "snake", "table", "wheel"],
+    "medium": ["flower", "banana", "happy", "dinner", "guitar", "jungle", "summer", "puzzle", "butter", "purple", "rocket", "orange", "camera", "pencil", "school", "monkey", "turtle", "holiday", "cherry", "shadow", "bicycle", "bouquet", "captain", "library", "helmet", "marble", "novelty", "opposite", "pleasant", "question", "resource", "electricity", "fantasy", "geometry", "horizon", "inspiration", "jewelry", "knowledge", "landscape", "mountain", "nightmare", "operation", "paradise", "quantity", "restaurant", "scientist", "technology", "umbrella", "vegetable", "waterfall", "xylophone", "yellow"],
+    "hard": ["elephant", "chocolate", "television", "umbrella", "important", "celebration", "fantastic", "knowledge", "incredible", "tournament", "adventure", "opportunity", "mysterious", "vegetables", "experience", "leadership", "creativity", "recognition", "discovery", "architecture", "bureaucracy", "disproportionate", "encyclopedia", "hieroglyphics", "independence", "mathematician", "persuasiveness", "quantum mechanics", "syllabication", "bewildered", "exaggeration", "flamboyant", "gobbledygook", "hallucination", "incomprehensible", "jurisprudence", "kaleidoscope", "labyrinthine", "magnificence", "necessitarianism", "obliteration", "parapsychology", "quintessentially", "rambunctious", "simultaneously", "tintinnabulation", "ubiquitousness", "verisimilitude", "weltschmerz", "xerophthalmia", "youthfulness", "zeitgeist"]
 }
 
-# Function to choose a random word from the word list
+
+# Initialize player's name and score
+player_name = ""
+score = 0
+
+# Function to choose a random word from the word list based on difficulty
 
 
-def choose_word():
-    return random.choice(word_list)
+def choose_word(difficulty):
+    words = word_lists[difficulty]
+    return random.choice(words)
 
 # Function to display the current state of the word with guessed letters
 
@@ -105,51 +105,43 @@ def display_word(word, guessed_letters):
             display += Fore.YELLOW + "_" + Fore.RESET
     return display
 
-
-score = 0
-
-
 # Function to update the score
-def update_score(score, points):
-    return score + points
+
+
+def update_score(points):
+    global score
+    score += points
 
 # Function to play the Hangman game
 
 
 def play_hangman(difficulty):
-    global score
-    time_limit = difficulty_levels[difficulty]
-    word = choose_word()
+    global player_name, score
+    word = choose_word(difficulty)
     guessed_letters = []
     attempts = 6
     current_stage = 0
-    start_time = time.time()
-# Player name input
+
+    if not player_name:
+        # Get the player's name if it's not already set
+        while True:
+            player_name = input(Fore.CYAN + "Enter your name: " + Fore.RESET)
+            player_name = player_name.strip()
+            if player_name and player_name.isalpha():
+                player_name = player_name.capitalize()
+                break
+            else:
+                print(Fore.RED + "Please enter a valid name." + Fore.RESET)
+
     while True:
-        player_name = input(Fore.CYAN + "Enter your name: " + Fore.RESET)
-        player_name = player_name.strip()
-
-        if player_name and player_name.isalpha():
-            player_name = player_name.capitalize()
-            break
-        else:
-            print(Fore.RED + "Please enter a valid name." + Fore.RESET)
-
-    while True:
-        elapsed_time = int(time.time() - start_time)
-        remaining_time = time_limit - elapsed_time
-        if remaining_time <= 0:
-            print(Fore.RED + "Time's up! You ran out of time." + Fore.RESET)
-            break
-
         print(HANGMAN[current_stage])  # Display Hangman art
         print(f"\nWord: {display_word(word, guessed_letters)}")
         print(Fore.CYAN +
               f"Guessed letters: {', '.join(guessed_letters)}" + Fore.RESET)
         print(f"Attempts left: {attempts}")
-        print(Fore.MAGENTA +
-              f"Time remaining: {remaining_time} seconds" + Fore.RESET)
-        print(Fore.CYAN + f"Player: {player_name} | Current Score: {score}")
+        print(Fore.CYAN +
+              f"Player: {player_name} | Current Score: {score}" + Fore.RESET)
+
         if "_" not in display_word(word, guessed_letters):
             print(Fore.GREEN + "Congratulations! You guessed the word." + Fore.RESET)
             break
@@ -186,7 +178,7 @@ def play_hangman(difficulty):
             print(
                 Fore.RED + f"Wrong guess! {attempts} attempts left." + Fore.RESET)
         else:
-            score = update_score(score, 5)
+            update_score(5)
 
         if current_stage == len(HANGMAN) - 1:
             print(HANGMAN[current_stage])
@@ -195,23 +187,23 @@ def play_hangman(difficulty):
             break
 
     print(Fore.CYAN + f"The word was: {word}" + Fore.RESET)
-    print(Fore.BLUE + f"Your final score is: {score}")
+
 # Function to display the rules
 
 
 def display_rules():
     title = "Hangman Rules:"
     rules_text = (
-        "1. You have a limited time to guess the word based on the difficulty level:\n"
-        "   - Easy: 60 seconds\n"
-        "   - Medium: 40 seconds\n"
-        "   - Hard: 20 seconds\n"
-        "2. You start with 6 attempts.\n"
-        "3. Guess one letter at a time.\n"
-        "4. If you guess a letter correctly, it will be revealed in the word.\n"
-        "5. If you guess a letter incorrectly, you lose an attempt.\n"
-        "6. You win the game if you guess the entire word.\n"
-        "7. You lose the game if you run out of time or attempts."
+        "1. You have 6 attempts to guess the word. If you run out of attempts, the game is over.\n"
+        "2. Guess one letter at a time by typing it in and pressing Enter.\n"
+        "3. If you guess a letter correctly, it will be revealed in the word.\n"
+        "4. If you guess a letter incorrectly, you lose an attempt.\n"
+        "5. You win the game if you guess the entire word.\n"
+        "6. The game offers three difficulty levels, each with different word lengths:\n"
+        "   - Easy: Words are 3-4 letters long.\n"
+        "   - Medium: Words are 5-7 letters long.\n"
+        "   - Hard: Words are 9 letters or longer.\n\n"
+        "To play, select a difficulty level from the main menu, and start guessing letters to uncover the hidden word. The game will adapt to your chosen difficulty, and your score will increase as you make correct guesses. Enjoy the game!"
     )
 
     colored_title = f"{Fore.MAGENTA}{title}{Fore.RESET}"
@@ -222,8 +214,6 @@ def display_rules():
 
 
 # Main menu with options to view rules, play, or exit
-
-
 menu = TerminalMenu(
     [
         f"View Rules",
@@ -233,6 +223,7 @@ menu = TerminalMenu(
         f"Exit"
     ]
 )
+
 # Display rules when the game starts
 display_rules()
 
