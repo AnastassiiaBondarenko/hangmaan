@@ -1,5 +1,6 @@
 import random
 import gspread
+import os
 from google.oauth2.service_account import Credentials
 from simple_term_menu import TerminalMenu
 from colorama import init, Fore, Back, Style
@@ -66,6 +67,15 @@ def reset_player_data():
     global player_name, score
     player_name = ""
     score = 0
+
+    # Function to clear the terminal screen
+
+
+def clear_screen():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 # Function to play the Hangman game
 
 
@@ -207,3 +217,4 @@ while True:
         update_google_sheet(player_name, score)
         reset_player_data()
         break
+clear_screen()
