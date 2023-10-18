@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "hangman-401413",
+  "private_key_id": "674fb92d90134b7570abfad411fda7f667120e50",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCzwM76dwGq+9sf\nxUp+Kd/avApQxaTP5/z1nroN4Vo5RKqWffzYPYIhLsQyTPZuqcEr1JOntN86xtPG\n/e2XQvgFA06ScUaZ/4mPLE5/YGK/dBQ2vyMSSJME+75gzBaEq/r3O1JzBqsJkpXd\nRsf+pVHvyuHw4JTXRZJgDoPor3XK+LaJy+8Q50dczgiwZS3dRmHmopS3TdgtWd0E\nHuV5uDL2Vz1CTCwkPDQct7kExQC3sLHlYW5pYODNefOTUmhXNvhRIToby13yIRaf\nZMQcNFHJfeB6HEP1T5xZ9lQO9T3BRLIyNNwVrEpv5m3SUxJ7fKPyiJCk8eHgB9LJ\nRNd92trhAgMBAAECggEAFlFlIXHvMhSNM1eilSGL2rOoMDkp6mpqXPC1Nw34zs14\nxLCl2Q9h/c65q2kk276V7mQ5ZQQvBzQyjS1v92zoMG8lrUcFNg+lO7KLmIMWH6FA\n9T8sEpQSNPcwvwH39ccIpPOnnAKC7/BUTSIBqNtL3hL5lJe9wzCvKOAEfrpyTJ35\neH1c7jYjGL6TzNVEehC/NxCvIs4Up4ZoM47u5C1+ityQA8ZKXJWZjPxETW69W98M\nxrdfIxqDmkOsk/N7D/e0mw6zrOI7VYemJFuieOOdwes07iiLyl58hSwhQ8YgWaeb\ndPkJKe0mF+tj8TiKdFJqVM4nOwtSOlVrQVV9uiZfMQKBgQDdXcKnr+j71pngpVsL\nn4der/iKTJ7AaVXfRFpmtqeBx+jjsQOH2FaZA8dqIex7lUJO4o9tPXIoNY2QrQZJ\nPJ8XLSoAipDQ9IBjBWnwUnm+g/TJqrlRbqHApwqxcbwS0QLW61fgLr9bGYoJvMv5\nhHPrc21atl91mG7I5+42/l1ADQKBgQDP4FiENPIMAfuCUu0l8XIUvkv3HZjd47Hy\n7XHtQBR57JxhrIUC950NUJFhbR3V8G0rvbIDW+PwaaKdXckFq0pvcnOplRHlX3D0\nKOI63rXuHWRg69gMM3yoBNM1IdHwhZrjaDJVgTumeJNTnFLp3zDIIDQ4oaHEefJm\nwvRvPbO9JQKBgQDIUBfc9em2OjN0fS0uD2XH4STewQbGxorWRlwnphFd9zBfGcdA\nHhv+ytSgzaHZEu+1wn5XM8shZ5R63pdZnmm35z6izsDM1PN4p2V9+qQAKhhQhRS9\nA4eLdZzPhUPTIx+Wq9ARJTwzi6DFvvo1CA59eS3zcCRhnVZipr2BNhvb4QKBgBm3\nu7u/gSKTLDaXY9eJ439Fe8h61Oq+vMk9LxcXEnFzIHXFDj+rurZm/VV8VnCdaiQ7\nN8bKm4ymxQOLEs+svWzEUCLu2mPyRtsuI6781q063axQAU6hIA75adfs8zg6j0sL\nHQ8PCf4ydKenc2qTvklEErHe7VCNdbvY6rzIeXAxAoGAUhaQdre5XYL+ygS8MMnM\n9MakL0D388vPrGcjnAaLtnYwWAhBjEH51FEVCYaKke9amudlfrvFlN+jJ8eFdVQu\nSwa0Lhxr+Il+JFACE612XMlMzgX+h7YFdLkEEDPRA2Er6BzOLJaYPZn/e9NQF3NO\n7Yi25LwNPn1N4BXNAAps5L4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "hangmanappserviceaccount@hangman-401413.iam.gserviceaccount.com",
+  "client_id": "108246481910447724701",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/hangmanappserviceaccount%40hangman-401413.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
