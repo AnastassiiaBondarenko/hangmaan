@@ -89,7 +89,8 @@ def play_hangman(difficulty):
     if not player_name:
         # Get the player's name if it's not already set
         while True:
-            player_name = input(Fore.CYAN + "Enter your name: ")
+            player_name = input(
+                Fore.CYAN + Back.LIGHTWHITE_EX + Style.BRIGHT + "Enter your name: " + Style.RESET_ALL)
             player_name = player_name.strip()
             if player_name and player_name.isalpha():
                 player_name = player_name.capitalize()
@@ -104,10 +105,12 @@ def play_hangman(difficulty):
               f"Guessed letters: {', '.join(guessed_letters)}")
         print(f"Attempts left: {attempts}")
         print(Fore.MAGENTA +
-              f"Player: {player_name} | Current Score: {score}")
+              f"Player: {player_name} | Current Score: {score}\n")
 
         if "_" not in display_word(word, guessed_letters):
-            print(Fore.GREEN + "Congratulations! You guessed the word.")
+            print(Fore.GREEN + Back.LIGHTCYAN_EX + Style.BRIGHT +
+                  "Congratulations! You guessed the word.")
+            print()
             break
         if attempts <= 0:
             print(HANGMAN[len(HANGMAN) - 1])
@@ -115,10 +118,11 @@ def play_hangman(difficulty):
             break
 
         user_input = input(
-            Fore.YELLOW + "Guess a letter (or 'Q' to quit): ").lower()
+            Fore.GREEN + "Guess a letter (or 'Q' to quit): ").lower()
+        print()
 
         if user_input == 'q':
-            print(Fore.YELLOW + "You quit the game.")
+            print(Fore.YELLOW + "You quit the game.\n")
             break
 
         if len(user_input) != 1:
@@ -140,7 +144,7 @@ def play_hangman(difficulty):
             attempts -= 1
             current_stage += 1
             print(
-                Fore.RED + f"Wrong guess! {attempts} attempts left.")
+                Fore.RED + Back.BLACK + Style.BRIGHT + f"Wrong guess! {attempts} attempts left.")
         else:
             update_score(5)
 
@@ -148,16 +152,19 @@ def play_hangman(difficulty):
             print(HANGMAN[current_stage])
             print(Fore.WHITE + Back.RED + Style.BRIGHT +
                   "Game over! You've been hanged.")
+            print()
             break
 
     print(Fore.CYAN + Back.LIGHTMAGENTA_EX +
           Style.BRIGHT + f"The word was: {word}")
 
+    print()
+
 # Function to display the rules
 
 
 def display_rules():
-    title = "Hangman Rules:"
+    title = "Hangman Rules:\n"
     rules_text = (
         "1. You have 6 attempts to guess the word. If you run out of attempts, the game is over.\n"
         "2. Guess one letter at a time by typing it in and pressing Enter.\n"
@@ -168,20 +175,23 @@ def display_rules():
         "   - Easy: Words are 3-4 letters long.\n"
         "   - Medium: Words are 5-7 letters long.\n"
         "   - Hard: Words are 9 letters or longer.\n\n"
-        "To play, select a difficulty level from the main menu, and start guessing letters to uncover the hidden word. The game will adapt to your chosen difficulty, and your score will increase as you make correct guesses. Enjoy the game!"
+        "To play, select a difficulty level from the main menu, and start guessing letters to uncover the hidden word. The game will adapt to your chosen difficulty, and your score will increase as you make correct guesses. Enjoy the game!\n"
     )
 
-    colored_title = f"{Fore.MAGENTA + Back.LIGHTWHITE_EX}{title}"
-    colored_rules_text = f"{Fore.CYAN + Back.LIGHTBLACK_EX}{rules_text}"
+    colored_title = f"{Fore.MAGENTA + Back.LIGHTWHITE_EX}{Style.BRIGHT}{title}"
+    colored_rules_text = f"{Fore.CYAN + Back.LIGHTYELLOW_EX}{Style.BRIGHT}{rules_text}"
 
     print(f"{colored_title}\n{colored_rules_text}")
-    input(f"{Fore.GREEN}{Back.LIGHTYELLOW_EX}{Style.BRIGHT}\nPress Enter to return to the main menu.")
+    input(f"{Fore.MAGENTA}{Back.LIGHTGREEN_EX}{Style.BRIGHT}\nPress Enter to return to the main menu.\n")
+
+
+clear_screen()
 
 
 # Main menu with options to view rules, play, or exit
 menu_styles = {
     "menu_cursor_style": None,
-    "menu_highlight_style": ("fg_purple", "bg_black", "bold"),
+    "menu_highlight_style": ("fg_purple", "bg_gray", "bold"),
     "status_bar_style": ("fg_yellow", "bg_black"),
     "multi_select_cursor_style": None,
 }
@@ -217,4 +227,3 @@ while True:
         update_google_sheet(player_name, score)
         reset_player_data()
         break
-clear_screen()
