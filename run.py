@@ -179,13 +179,10 @@ def display_rules():
     )
 
     colored_title = f"{Fore.MAGENTA + Back.LIGHTWHITE_EX}{Style.BRIGHT}{title}"
-    colored_rules_text = f"{Fore.CYAN + Back.LIGHTYELLOW_EX}{Style.BRIGHT}{rules_text}"
+    colored_rules_text = f"{Fore.CYAN}{rules_text}"
 
     print(f"{colored_title}\n{colored_rules_text}")
     input(f"{Fore.MAGENTA}{Back.LIGHTGREEN_EX}{Style.BRIGHT}\nPress Enter to return to the main menu.\n")
-
-
-clear_screen()
 
 
 # Main menu with options to view rules, play, or exit
@@ -227,3 +224,4 @@ while True:
         update_google_sheet(player_name, score)
         reset_player_data()
         break
+clear_screen()
