@@ -1,8 +1,8 @@
 # Hangman
 
-![Responsive Mockup](documentation/png)
+![Responsive Mockup](documentation/main.png)
 
-*The link to [Hangman]()*
+*The link to [Hangman](https://hangmaan-e286c342fa29.herokuapp.com/)*
 
 The Hangman Game is a text-based word guessing game that challenges your word-guessing skills. You can play this game in three different difficulty levels: easy, medium, and hard. The objective of the game is to guess the hidden word letter by letter, while avoiding being "hanged" by incorrect guesses.
 
@@ -10,7 +10,7 @@ The Hangman Game is a text-based word guessing game that challenges your word-gu
 
 ## How to play:
 
-  1. Click this *[link]()* or copy this text: `` and paste it in your browser's address bar.
+  1. Click this *[link](https://hangmaan-e286c342fa29.herokuapp.com/)* or copy this text: `https://hangmaan-e286c342fa29.herokuapp.com/` and paste it in your browser's address bar.
   1. Once the game page is loaded, click the "RUN PROGRAM" button.
   1. Introduce yourself to the program by entering your name when prompted.
   1. Familiarize yourself with the game rules, which will be displayed. Take a moment to read through them.
@@ -23,7 +23,7 @@ The Hangman Game is a text-based word guessing game that challenges your word-gu
   1. Once you've had your fill of the game, you can choose the "Quit" option from the main menu to exit the game.
 
 
-  Link to the game: **
+  Link to the game: *https://hangmaan-e286c342fa29.herokuapp.com/*
 
 ---
 ## User Stories
@@ -89,7 +89,7 @@ The Hangman Game is a text-based word guessing game that challenges your word-gu
 
 1. When you run the Hangman game, you will be greeted with a game introduction and a brief explanation of the rules. The game sets the stage for an exciting word-guessing adventure.
 
-   ![Game Rules]()
+   ![Game Rules](documentation/rules.png)
 
 ### Step 2: Choose a Difficulty Level
 
@@ -99,13 +99,13 @@ The Hangman Game is a text-based word guessing game that challenges your word-gu
    - **Medium**: A moderate challenge with longer words.
    - **Hard**: For experts, featuring the most challenging and lengthy words.
 
-   ![Difficulty Levels]()
+   ![Difficulty Levels](documentation/menu.png)
 
 ### Step 3: Enter Your Name
 
 3. Following your difficulty level selection, you will be prompted to enter your name. Your name will be used to personalize your gaming experience and track your scores.
 
-   ![Enter Your Name]()
+   ![Enter Your Name](documentation/name.png)
 
 ### Step 4: Start Playing
 
@@ -121,13 +121,15 @@ The Hangman Game is a text-based word guessing game that challenges your word-gu
 
    - **Winning or Losing**: Your objective is to guess the entire word correctly. If you succeed, you win the game with a cheerful message. If you run out of attempts, the game ends, and you receive a message indicating that you've been "hanged". But you can still continue playing untill you get bored!
 
-   ![Playing Hangman]()
+   ![Playing Hangman](documentation/game.png)
 
 ### Step 5: Quitting the Game
 
-5. If at any point you choose to exit the game, select the "Quit" option. The game will bid you farewell with a friendly message, and your session will be concluded.
+5. If at any point you choose to exit the game, select the "Quit" option. The game will show you menu where you can choose exit and game will bid you farewell with a friendly message, and your session will be concluded.
 
-   ![Goodbye Message]()
+   ![Quit](documentation/quit.png)
+   ![Exit](documentation/exit.png)
+
 
 ---
 
