@@ -1,10 +1,10 @@
 import random
-import gspread
 import os
+import gspread
 from google.oauth2.service_account import Credentials
 from simple_term_menu import TerminalMenu
 from colorama import init, Fore, Back, Style
-from const import *
+from constant import *
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -26,17 +26,19 @@ init(autoreset=True)
 player_name = ""
 score = 0
 
-# Function to choose a random word from the word list based on difficulty
-
 
 def choose_word(difficulty):
+    """
+    Choose a random word from the word list based on the selected difficulty.
+    """
     words = word_lists[difficulty]
     return random.choice(words)
 
-# Function to display the current state of the word with guessed letters
-
 
 def display_word(word, guessed_letters):
+    """
+    Display the current state of the word with guessed letters
+    """
     display = ""
     for letter in word:
         if letter in guessed_letters:
@@ -45,17 +47,19 @@ def display_word(word, guessed_letters):
             display += Fore.YELLOW + "_"
     return display
 
-# Function to update the score
-
 
 def update_score(points):
+    """
+    Update the score
+    """
     global score
     score += points
 
-# Function to update the Google Sheet
-
 
 def update_google_sheet(player_name, score):
+    """
+    Update the Google Sheet
+    """
     try:
         values_to_insert = [[player_name, str(score)]]
         PLAYER_DATA_SHEET.insert_rows(values_to_insert, 2)
@@ -68,18 +72,21 @@ def reset_player_data():
     player_name = ""
     score = 0
 
-    # Function to clear the terminal screen
-
 
 def clear_screen():
+    """
+    Clear the terminal screen
+    """
     if os.name == 'nt':
         os.system('cls')
     else:
         os.system('clear')
-# Function to play the Hangman game
 
 
 def play_hangman(difficulty):
+    """
+    Play the Hangman game
+    """
     global player_name, score
     word = choose_word(difficulty)
     guessed_letters = []
@@ -97,6 +104,10 @@ def play_hangman(difficulty):
                 break
             else:
                 print(Fore.RED + "Please enter a valid name.")
+
+        clear_screen()  # Clear the screen again
+        print(Fore.LIGHTYELLOW_EX + Back.BLACK + Style.BRIGHT +
+              f"Hi, {player_name}! Let's start playing Hangman!\n")
 
     while True:
         print(HANGMAN[current_stage])  # Display Hangman art
@@ -126,7 +137,7 @@ def play_hangman(difficulty):
             break
 
         if len(user_input) != 1:
-            print(Fore.RED + "Please enter only one character.")
+            print(Fore.RED + "Please enter one letter.")
             continue
 
         if not user_input.isalpha():
@@ -160,10 +171,11 @@ def play_hangman(difficulty):
 
     print()
 
-# Function to display the rules
-
 
 def display_rules():
+    """
+    Display the rules
+    """
     title = "Hangman Rules:\n"
     rules_text = (
         "1. You have 6 attempts to guess the word. If you run out of attempts, the game is over.\n"
@@ -178,50 +190,56 @@ def display_rules():
         "To play, select a difficulty level from the main menu, and start guessing letters to uncover the hidden word. The game will adapt to your chosen difficulty, and your score will increase as you make correct guesses. Enjoy the game!\n"
     )
 
-    colored_title = f"{Fore.MAGENTA + Back.LIGHTWHITE_EX}{Style.BRIGHT}{title}"
+    colored_title = f"{Fore.MAGENTA + Back.LIGHTWHITE_EX}{Style.BRIGHT}{title}{Style.RESET_ALL}"
     colored_rules_text = f"{Fore.CYAN}{rules_text}"
 
     print(f"{colored_title}\n{colored_rules_text}")
     input(f"{Fore.MAGENTA}{Back.LIGHTGREEN_EX}{Style.BRIGHT}\nPress Enter to return to the main menu.\n")
 
 
-# Main menu with options to view rules, play, or exit
-menu_styles = {
-    "menu_cursor_style": None,
-    "menu_highlight_style": ("fg_purple", "bg_gray", "bold"),
-    "status_bar_style": ("fg_yellow", "bg_black"),
-    "multi_select_cursor_style": None,
-}
+def main():
+    """Main menu with options to view rules, play, or exit
+    """
+    menu_styles = {
+        "menu_cursor_style": None,
+        "menu_highlight_style": ("fg_purple", "bg_gray", "bold"),
+        "status_bar_style": ("fg_yellow", "bg_black"),
+        "multi_select_cursor_style": None,
+    }
 
-menu = TerminalMenu(
-    [
-        f"View Rules",
-        f"Play Easy",
-        f"Play Medium",
-        f"Play Hard",
-        f"Exit"
-    ],
-    menu_cursor=None,
-    **menu_styles
-)
+    menu = TerminalMenu(
+        [
+            f"View Rules",
+            f"Play Easy",
+            f"Play Medium",
+            f"Play Hard",
+            f"Exit"
+        ],
+        menu_cursor=None,
+        **menu_styles
+    )
 
 # Display rules when the game starts
-display_rules()
+    display_rules()
 
-while True:
-    choice_index = menu.show()
-    if choice_index == 0:
-        display_rules()
-    elif choice_index == 1:
-        play_hangman("easy")
-    elif choice_index == 2:
-        play_hangman("medium")
-    elif choice_index == 3:
-        play_hangman("hard")
-    elif choice_index == 4:
-        print(Fore.CYAN + Back.MAGENTA + Style.BRIGHT +
-              "Thanks for playing Hangman!")
-        update_google_sheet(player_name, score)
-        reset_player_data()
-        break
-clear_screen()
+    while True:
+        choice_index = menu.show()
+        if choice_index == 0:
+            display_rules()
+        elif choice_index == 1:
+            play_hangman("easy")
+        elif choice_index == 2:
+            play_hangman("medium")
+        elif choice_index == 3:
+            play_hangman("hard")
+        elif choice_index == 4:
+            print(Fore.CYAN + Back.MAGENTA + Style.BRIGHT +
+                  "Thanks for playing Hangman!")
+            update_google_sheet(player_name, score)
+            reset_player_data()
+            break
+    clear_screen()
+
+
+if __name__ == "__main__":
+    main()
