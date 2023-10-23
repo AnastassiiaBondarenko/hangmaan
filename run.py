@@ -97,7 +97,8 @@ def play_hangman(difficulty):
         # Get the player's name if it's not already set
         while True:
             player_name = input(
-                Fore.CYAN + Back.LIGHTWHITE_EX + Style.BRIGHT + "Enter your name: " + Style.RESET_ALL)
+                Fore.CYAN + Back.LIGHTWHITE_EX + Style.BRIGHT
+                + "Enter your name: " + Style.RESET_ALL)
             player_name = player_name.strip()
             if player_name and player_name.isalpha():
                 player_name = player_name.capitalize()
@@ -142,7 +143,8 @@ def play_hangman(difficulty):
 
         if not user_input.isalpha():
             print(
-                Fore.RED + "Please enter a letter, not a number or special character.")
+                Fore.RED +
+                "Please enter a letter, not a number or special character.")
             continue
 
         if user_input in guessed_letters:
@@ -155,7 +157,8 @@ def play_hangman(difficulty):
             attempts -= 1
             current_stage += 1
             print(
-                Fore.RED + Back.BLACK + Style.BRIGHT + f"Wrong guess! {attempts} attempts left.")
+                Fore.RED + Back.BLACK +
+                Style.BRIGHT + f"Wrong guess! {attempts} attempts left.")
         else:
             update_score(5)
 
@@ -178,23 +181,33 @@ def display_rules():
     """
     title = "Hangman Rules:\n"
     rules_text = (
-        "1. You have 6 attempts to guess the word. If you run out of attempts, the game is over.\n"
-        "2. Guess one letter at a time by typing it in and pressing Enter.\n"
-        "3. If you guess a letter correctly, it will be revealed in the word.\n"
+        "1. You have 6 attempts to guess the word. If you run out of attempts,"
+        "the game is over.\n"
+        "2. Guess one letter at a time by typing it and pressing Enter.\n"
+        "3. If you guess a letter correctly,it will be revealed in the word.\n"
         "4. If you guess a letter incorrectly, you lose an attempt.\n"
         "5. You win the game if you guess the entire word.\n"
-        "6. The game offers three difficulty levels, each with different word lengths:\n"
-        "   - Easy: Words are 3-4 letters long.\n"
-        "   - Medium: Words are 5-7 letters long.\n"
-        "   - Hard: Words are 9 letters or longer.\n\n"
-        "To play, select a difficulty level from the main menu, and start guessing letters to uncover the hidden word. The game will adapt to your chosen difficulty, and your score will increase as you make correct guesses. Enjoy the game!\n"
+        "6. The game offers three difficulty levels with different"
+        "word lengths:\n"
+        "   - Easy: 3-4 letters long.\n"
+        "   - Medium: 5-7 letters long.\n"
+        "   - Hard: 9 letters or longer.\n\n"
+        "To play, select a difficulty level from the main menu,"
+        "and start guessing letters to uncover the hidden word."
+        " The game will adapt to your chosen difficulty, and your"
+        " score will increase with correct guesses. Enjoy the game!\n"
     )
 
-    colored_title = f"{Fore.MAGENTA + Back.LIGHTWHITE_EX}{Style.BRIGHT}{title}{Style.RESET_ALL}"
-    colored_rules_text = f"{Fore.CYAN}{rules_text}"
+    colored_title = (
+        f"{Fore.MAGENTA}{Back.LIGHTWHITE_EX}{Style.BRIGHT}{title}"
+    )
+    colored_rules_text = f"{Style.RESET_ALL}{Fore.CYAN}{rules_text}"
 
     print(f"{colored_title}\n{colored_rules_text}")
-    input(f"{Fore.MAGENTA}{Back.LIGHTGREEN_EX}{Style.BRIGHT}\nPress Enter to return to the main menu.\n")
+    input(
+        f"{Fore.MAGENTA}{Back.LIGHTGREEN_EX}{Style.BRIGHT}\n"
+        f"Press Enter to return to the main menu.\n"
+    )
 
 
 def main():

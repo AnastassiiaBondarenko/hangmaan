@@ -138,7 +138,7 @@ The Hangman Game is a text-based word guessing game that challenges your word-gu
 
 The flowchart represents the logic of the game:
 
-  ![Flash Card Page](documentation/)
+  ![Flash Card Page](documentation/flash.jpg)
 
 
 ---
@@ -146,4 +146,154 @@ The flowchart represents the logic of the game:
 
 ### Languages:
 
-- [Python ]
+- [Python 3.8.5](https://www.python.org/downloads/release/python-385/): used to anchor the project and direct all application behavior
+
+- [JavaScript](https://www.javascript.com/): used to provide the start script needed to run the Code Institute mock terminal in the browser
+
+
+### Frameworks/Libraries, Programmes and Tools:
+#### Python modules/packages:
+
+##### Standard library imports:
+
+- [random](https://docs.python.org/3/library/random.html) was used to implement pseudo-random number generation.
+- [os](https://docs.python.org/3/library/os.html ) was used to clear the terminal before running the program.
+##### Third-party imports:
+
+- [gspread](https://docs.gspread.org/)  Used to connect and interact with Google Sheets for storing player data.
+- [google.oauth2.service_account](https://google-auth.readthedocs.io/) Used for working with service account credentials to authenticate with Google services.
+- [Simple Terminal Menu](https://pypi.org/project/simple-term-menu/) was used to implement the menu.
+- [Colorama](https://pypi.org/project/colorama/) was used to add colors and styles to the project.
+
+#### External tools:
+
+- [VSCode](https://code.visualstudio.com/) was used as the main tool to write and edit code.
+- [Git](https://git-scm.com/) was used for the version control of the website.
+- [GitHub](https://github.com/) was used to host the code of the website.
+- [Miro](https://miro.com/app/) was used to make a flowchart for the README file.
+- [Heroku](https://dashboard.heroku.com/) was used to deploy the project.
+- [Google Sheets](https://www.google.com/sheets/) used for storing player names and scores.
+
+
+---
+
+
+## Bugs
+
++ **Solved bugs**
+
+### Bug: Timer Display Issue
+
+- **Description:** Initially, there was an issue where the timer was meant to be updated every second in the terminal, but it was consistently displayed on the same line as the "Guess a letter" prompt. This layout caused confusion and led to various bugs and issues during gameplay.
+- **Solution:** To resolve this issue, I decided to remove the timer display altogether. This decision simplified the game interface and removed the source of many bugs, resulting in a cleaner and more user-friendly gaming experience.
+ [Timer Bug](documentation/timer_bug.png)
+
+### Bug: Google Sheets Integration Issue
+
+- **Description:** Initially, there were multiple errors and issues related to the Google Sheets integration in the game. These issues prevented the game from functioning as intended, and there were errors in data communication between the game and the Google Sheet.
+- **Solution:** To address these integration problems, I conducted a thorough review and reconfiguration of the Google Sheets integration. After identifying and rectifying the issues, I successfully established a connection between the game and the Google Sheet, enabling the storage of player data and scores as intended.
+ 
+
+
+
++ **Unsolved bugs**
+
+- I hope I don't have unsolved bugs.
+
+---
+
+## Testing
+
+Please refer to the [TESTING.md](TESTING.md) file for all test related documentation.
+
+---
+
+## Deployment
+
+- The program was deployed to [Heroku](https://dashboard.heroku.com).
+- The program can be reached by the [link](https://hangmaan-e286c342fa29.herokuapp.com/)
+
+## Local Deployment
+
+To deploy the project locally, follow these steps:
+
+### Prerequisites
+
+- Python must be installed on your local machine. You can install it by running:
+  - `sudo apt install python3` 
+- Ensure that pip is installed for installing the required modules. If not, install it with:
+  - `sudo apt install python3-pip`
+
+
+### Download or Clone the Project
+
+You can choose to download the project or clone it from the repository.
+
+**Option 1: Download ZIP File**
+
+1. Visit the [GitHub Repository](https://github.com/AnastassiiaBondarenko/hangmaan).
+2. Click on the "Code" button and download the ZIP file containing the project.
+3. Unzip the downloaded file to a directory of your choice.
+
+**Option 2: Clone the Repository**
+
+1. Open a terminal and navigate to the directory where you want to store the project.
+2. Run the following command:
+  - `git clone https://github.com/AnastassiiaBondarenko/hangmaan.git
+
+
+### Install Dependencies
+
+1. Navigate to the project folder using the terminal:
+  - `cd hangmaan`
+
+2. Install the required Python modules by running:
+  - `pip3 install -r requirements.txt`
+
+
+*Note: If you are in a region with restricted internet access, you may need to configure a proxy for the `nltk` package. Consult your VPN settings for the server address and HTTP/HTTPS Proxy Port.*
+
+## Remote Web Application Deployment
+
+You can deploy the project as a remote web application on platforms like Heroku or Render.
+
+### Heroku Deployment
+
+1. Go to the Deploy tab.
+
+  1. Link your GitHub account and connect the application to the repository you created.
+
+
+  1. Go to the Settings tab:
+  
+
+  1. Click "Add buildpack":
+
+  1. Add the Python and Node.js buildpacks.
+
+
+  1. Click "Reveal Config Vars."
+
+  1. Add 2 new Config Vars:
+      - Key: PORT Value: 8000
+      - *This Config was provided by [CODE INSTITUTE](https://codeinstitute.net/)*.
+      - Key: CREDS Value: all info from creds.json
+
+  1. Go back to the Deploy tab
+
+  1. Click "Deploy Branch"
+
+      - Wait for the completion of the deployment.
+
+  1. Click "Open app" to launch the application inside a web page.
+
+
+
+
+
+---
+## Credits
+
+- Color formatting: [Colorama](https://pypi.org/project/colorama/).
+- Terminal menu: [Simple Terminal Menu](https://pypi.org/project/simple-term-menu/).
+
