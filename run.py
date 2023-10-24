@@ -28,17 +28,13 @@ score = 0
 
 
 def choose_word(difficulty):
-    """
-    Choose a random word from the word list based on the selected difficulty.
-    """
+    """ Choose a random word from the word list based on the selected difficulty. """
     words = word_lists[difficulty]
     return random.choice(words)
 
 
 def display_word(word, guessed_letters):
-    """
-    Display the current state of the word with guessed letters
-    """
+    """ Display the current state of the word with guessed letters. """
     display = ""
     for letter in word:
         if letter in guessed_letters:
@@ -49,17 +45,13 @@ def display_word(word, guessed_letters):
 
 
 def update_score(points):
-    """
-    Update the score
-    """
+    """ Update the score """
     global score
     score += points
 
 
 def update_google_sheet(player_name, score):
-    """
-    Update the Google Sheet
-    """
+    """ Update the Google Sheet"""
     try:
         values_to_insert = [[player_name, str(score)]]
         PLAYER_DATA_SHEET.insert_rows(values_to_insert, 2)
@@ -74,9 +66,7 @@ def reset_player_data():
 
 
 def clear_screen():
-    """
-    Clear the terminal screen
-    """
+    """Clear the terminal screen"""
     if os.name == 'nt':
         os.system('cls')
     else:
@@ -84,9 +74,7 @@ def clear_screen():
 
 
 def play_hangman(difficulty):
-    """
-    Play the Hangman game
-    """
+    """ Play the Hangman game"""
     global player_name, score
     word = choose_word(difficulty)
     guessed_letters = []
@@ -120,7 +108,7 @@ def play_hangman(difficulty):
               f"Player: {player_name} | Current Score: {score}\n")
 
         if "_" not in display_word(word, guessed_letters):
-            print(Fore.GREEN + Back.LIGHTCYAN_EX + Style.BRIGHT +
+            print(Fore.LIGHTCYAN_EX + Back.GREEN + Style.BRIGHT +
                   "Congratulations! You guessed the word.")
             print()
             break
@@ -176,9 +164,7 @@ def play_hangman(difficulty):
 
 
 def display_rules():
-    """
-    Display the rules
-    """
+    """ Display the rules"""
     title = "Hangman Rules:\n"
     rules_text = (
         "1. You have 6 attempts to guess the word. If you run out of attempts,"
@@ -211,8 +197,7 @@ def display_rules():
 
 
 def main():
-    """Main menu with options to view rules, play, or exit
-    """
+    """ Main menu with options to view rules, play, or exit """
     menu_styles = {
         "menu_cursor_style": None,
         "menu_highlight_style": ("fg_purple", "bg_gray", "bold"),
