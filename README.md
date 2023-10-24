@@ -239,7 +239,7 @@ You can choose to download the project or clone it from the repository.
 
 1. Open a terminal and navigate to the directory where you want to store the project.
 2. Run the following command:
-  - `git clone https://github.com/AnastassiiaBondarenko/hangmaan.git
+  - ` https://github.com/AnastassiiaBondarenko/hangmaan.git`
 
 
 ### Install Dependencies
@@ -296,4 +296,7 @@ You can deploy the project as a remote web application on platforms like Heroku 
 
 - Color formatting: [Colorama](https://pypi.org/project/colorama/).
 - Terminal menu: [Simple Terminal Menu](https://pypi.org/project/simple-term-menu/).
+- Deployed  with [Heroku](https://www.heroku.com/).
+- CI Template Powered by GitHub used for automated testing and workflows.
+- [VS Code](https://code.visualstudio.com/) was used for writing the code for this game.
 
